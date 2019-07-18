@@ -1,0 +1,18 @@
+.topbar {
+  background: -webkit-linear-gradient(left, rgb(17, 216, 17), rgb(9, 172, 63));
+}
+
+.table tbody {
+  color: #696969;
+  
+}
+
+input[type="radio"] {
+  appearance: none;
+  margin: 0 20px;
+  width: 18px;
+  height: 18px;
+  
+  /* border-radius: 50%; */
+  
+}
