@@ -1,42 +1,49 @@
 <?php
 
-if (
-  isset($_POST['company_name']) && isset($_POST['customer_name']) && isset($_POST['customer_position']) && isset($_POST['customer_telephone']) && isset($_POST['customer_email']) &&
-  isset($_POST['q1_s1']) && isset($_POST['q1_s2']) && isset($_POST['q1_s3']) && isset($_POST['q1_s4']) && isset($_POST['q1_s5']) && isset($_POST['q2_s1']) && isset($_POST['q2_s2']) &&
-  isset($_POST['q2_s3']) && isset($_POST['q2_s4']) && isset($_POST['q2_s5']) && isset($_POST['q3_s1']) && isset($_POST['q3_s2']) && isset($_POST['q3_s3']) && isset($_POST['q3_s4'])
-) {
+if (isset($_POST['q1']) && isset($_POST['q2_province']) && isset($_POST['q2_amphur']) && isset($_POST['q3']) && isset($_POST['q4']) && isset($_POST['q5']) && isset($_POST['q6']) &&  isset($_POST['q7']) && isset($_POST['q8']) && isset($_POST['q9']) &&  isset($_POST['q10'])) {
+  include 'config.php';
 
-  include 'configdb.php';
+  $multiple_Q5 = "";
+  for ($i = 0; $i < count($_POST['q5']); $i++) {
+    $multiple_Q5 .= $_POST["q5"][$i];
+  }
 
-  $answer_company_Name = $_POST['company_name'];
-  $answer_customer_Name = $_POST['customer_name'];
-  $answer_customer_Position = $_POST['customer_position'];
-  $answer_customer_Telephone = $_POST['customer_telephone'];
-  $answer_customer_Email = $_POST['customer_email'];
+  $maker_province = $_POST['q2_province'];
+  $province = "SELECT province_name  FROM province where province_id=$maker_province";
+  $result_province = mysqli_query($conn, $province);
+  $province_Q2 = $result_province->fetch_array(MYSQLI_NUM);
 
+  $maker_amphur = $_POST['q2_amphur'];
+  $amphur = "SELECT amphur_name	 FROM amphur where amphur_id=$maker_amphur";
+  $result_amphur = mysqli_query($conn, $amphur);
+  $amphur_Q2 = $result_amphur->fetch_array(MYSQLI_NUM);
 
-  $q1_s1 = $_POST['q1_s1'];
-  $q1_s2 = $_POST['q1_s2'];
-  $q1_s3 = $_POST['q1_s3'];
-  $q1_s4 = $_POST['q1_s4'];
-  $q1_s5 = $_POST['q1_s5'];
-  $q2_s1 = $_POST['q2_s1'];
-  $q2_s2 = $_POST['q2_s2'];
-  $q2_s3 = $_POST['q2_s3'];
-  $q2_s4 = $_POST['q2_s4'];
-  $q2_s5 = $_POST['q2_s5'];
-  $q3_s1 = $_POST['q3_s1'];
-  $q3_s2 = $_POST['q3_s2'];
-  $q3_s3 = $_POST['q3_s3'];
-  $q3_s4 = $_POST['q3_s4'];
-  $q4_comment = $_POST['q4_comment'];
+  $Answer2 = $province_Q2[0] . $amphur_Q2[0];
 
 
-  $sql = "INSERT INTO answers (	company_name, customer_name, customer_position, customer_telephone, customer_email, q1_1, q1_2, q1_3, q1_4, q1_5, q2_1, q2_2, q2_3, q2_4, q2_5, q3_1, q3_2, q3_3, q3_4, suggestions_detail) VALUES 
-('$answer_company_Name', '$answer_customer_Name', '$answer_customer_Position', '$answer_customer_Telephone', '$answer_customer_Email', '$q1_s1', '$q1_s2', '$q1_s3', '$q1_s4', '$q1_s5', '$q2_s1', '$q2_s2', '$q2_s3', '$q2_s4', '$q2_s5', '$q3_s1', '$q3_s2', '$q3_s3','$q3_s4','$q4_comment')";
+  $q1 = $_POST['q1'];
+  $q2 = $Answer2;
+  $q3 = $_POST['q3'];
+  $q4 = $_POST['q4'];
+  $q5 = $multiple_Q5;
+  $q6 = $_POST['q6'];
+  $q7 = $_POST['q7'];
+  $q8 = $_POST['q8'];
+  $q9 = $_POST['q9'];
+  $q10 = $_POST['q10'];
+  $another_Q1 = $_POST['txt_area_q1_c5'];
+  $another_Q3 = $_POST['txt_area_q3_c5'];
+  $another_Q4 = $_POST['txt_area_q4_c5'];
+  $another_Q6 = $_POST['txt_area_q6_c4'];
+  $another_Q8 = $_POST['txt_area_q8_c5'];
+  $another_Q9 = $_POST['txt_area_q9_c5'];
+  $email = $_POST['q11_c1'];
+
+  $sql = "INSERT INTO answers (	q1, detail_q1, q2, q3, detail_q3, q4, detail_q4, q5, q6	, detail_q6, q7	, q8, detail_q8, q9, detail_q9, q10, email) VALUES 
+  ('$q1 ', '$another_Q1', '$q2', '$q3', '$another_Q3', '$q4', '$another_Q4', '$q5', '$q6', '$another_Q6', '$q7', '$q8', '$another_Q8', '$q9', '$another_Q9', '$q10', '$email')";
   $result = mysqli_query($conn, $sql);
 
-  if ( $result === TRUE) {
+  if ($result === TRUE) {
     echo ('1');
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
