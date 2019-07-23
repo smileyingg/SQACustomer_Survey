@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 18, 2019 at 07:15 AM
+-- Generation Time: Jul 23, 2019 at 03:26 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -54,6 +54,28 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `suggestions_detail` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member`
+--
+
+DROP TABLE IF EXISTS `member`;
+CREATE TABLE IF NOT EXISTS `member` (
+  `user_id` int(5) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `pass` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL DEFAULT 'admin',
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`user_id`, `username`, `pass`, `status`) VALUES
+(1, 'sdiadmin', 'mis@Pass01', 'admin');
 
 -- --------------------------------------------------------
 
